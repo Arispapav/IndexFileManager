@@ -18,3 +18,7 @@ Inital Plan
 5. Develop each command iteratively: create, open, insert, search, load, print, extract, and quit
 6. After each step make sure to perform tests to ensure functionality, also going to be using online gdb for compliation and
    debugging so ensure it works in cs1 and cs2 will be final step.
+
+Log Entry: 12/8/2024 5:31 PM
+Progress so far is pretty good, no serious functions implemented just some validation testing and making sure creation of 
+index files works, and im able to detect that. Also just a driver program. Testing has been done and some initial issues. Next session will be for reading the write function for converting to and from big-endian and mapping 512-byte blocks.

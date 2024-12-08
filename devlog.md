@@ -1,4 +1,4 @@
-Log Entrt: 12/8/2024 5:05 PM
+Log Entry: 12/8/2024 5:05 PM
 Thoughts on project
 Project from my understanding of reading the documentation, is to create a program that manages index files using a 
 B-tree stucture. Key functionalities I will have to consider are creating, opening, inserting, searching, and extracting data.

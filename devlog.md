@@ -16,4 +16,5 @@ Inital Plan
 3. Design the B-tree and implement needed methods like insert and search functionaltiies
 4. Make sure in-memory operations work then try disk-
 5. Develop each command iteratively: create, open, insert, search, load, print, extract, and quit
-6. After each step make sure to perform tests to ensure functionality
+6. After each step make sure to perform tests to ensure functionality, also going to be using online gdb for compliation and
+   debugging so ensure it works in cs1 and cs2 will be final step.

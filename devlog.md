@@ -31,3 +31,6 @@ Progess so far is sufficent, btree seems to work as intended. made a branch to t
 
 Log Entry: 12/8/2024 8:02
 Working on testing inputing to disks, certain file types are not working
+
+Log Entry: 12/8/2024 9:11 
+Finished in-memory operations and disk based operations. Working on implenting all the commands and finishing the project.

@@ -1,41 +1,29 @@
-#include <iostream>
-#include <fstream>
 #include <cstdint>
-#include <cstring>
-#include <vector>
 
+// Functions for big-endian conversion
+bool is_bigendian() {
+    int x = 1;
+    return ((uint8_t *)&x)[0] != 1;
+}
 
-// Utility class to manage 512-byte blocks
-class BlockManager {
-public:
-    static const size_t BLOCK_SIZE = 512;
+uint64_t reverse_bytes(uint64_t x) {
+    uint8_t dest[sizeof(uint64_t)];
+    uint8_t *source = (uint8_t*)&x;
+    for (int c = 0; c < (int)sizeof(uint64_t); c++)
+        dest[c] = source[sizeof(uint64_t)-c-1];
+    return *(uint64_t*)dest;
+}
 
-    BlockManager(const std::string &fileName) : fileName(fileName) {}
-
-    // Write a block of data at the specified block ID
-    void writeBlock(uint64_t blockId, const uint8_t *data) {
-        std::ofstream file(fileName, std::ios::binary | std::ios::in | std::ios::out);
-        if (!file.is_open()) {
-            throw std::runtime_error("Unable to open file for writing.");
-        }
-        file.seekp(blockId * BLOCK_SIZE);
-        file.write(reinterpret_cast<const char *>(data), BLOCK_SIZE);
-        file.close();
+uint64_t hostToBig(uint64_t x) {
+    if (!is_bigendian()) {
+        return reverse_bytes(x);
     }
+    return x;
+}
 
-    // Read a block of data from the specified block ID
-    void readBlock(uint64_t blockId, uint8_t *data) {
-        std::ifstream file(fileName, std::ios::binary);
-        if (!file.is_open()) {
-            throw std::runtime_error("Unable to open file for reading.");
-        }
-        file.seekg(blockId * BLOCK_SIZE);
-        file.read(reinterpret_cast<char *>(data), BLOCK_SIZE);
-        file.close();
+uint64_t bigToHost(uint64_t x) {
+    if (!is_bigendian()) {
+        return reverse_bytes(x);
     }
-
-private:
-    std::string fileName;
-};
-
-
+    return x;
+}

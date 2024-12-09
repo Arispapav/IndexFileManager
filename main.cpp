@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-
+#include "writeIndex.cpp"
 using namespace std;
 
 const string MAGIC_NUMBER = "4337PRJ3"; // 8 bytes
@@ -79,8 +79,25 @@ void openIndexFile() {
     file.close();
 }
 
+// Convert a uint64_t value to big-endian byte array
+void toBigEndian(uint64_t value, uint8_t *buffer) {
+    for (int i = 7; i >= 0; --i) {
+        buffer[i] = value & 0xFF;
+        value >>= 8;
+    }
+}
+
+// Convert a big-endian byte array to uint64_t
+uint64_t fromBigEndian(const uint8_t *buffer) {
+    uint64_t value = 0;
+    for (int i = 0; i < 8; ++i) {
+        value = (value << 8) | buffer[i];
+    }
+    return value;
+}
+
 int main() {
-    // Main Driver Program
+    /* Main Driver Program
     while (true) {
         cout << "Commands:\n";
         cout << "1. create - Create a new index file\n";
@@ -104,7 +121,40 @@ int main() {
         else {
             cout << "Invalid command. Please try again.\n";
         }
+    } */ 
+    // Testing write conversion
+    uint64_t original = 1234567890123456789ULL;
+    uint8_t buffer[8];
+
+    toBigEndian(original, buffer);
+    uint64_t convertedBack = fromBigEndian(buffer);
+
+    std::cout << "Original: " << original << "\n";
+    std::cout << "Converted Back: " << convertedBack << "\n";
+
+    // Test block management
+    try {
+        BlockManager manager("index_file.dat");
+
+        // Create a block filled with test data
+        uint8_t writeData[BlockManager::BLOCK_SIZE] = {0};
+        std::fill_n(writeData, BlockManager::BLOCK_SIZE, 0xAA);
+
+        // Write to block 0
+        manager.writeBlock(0, writeData);
+
+        // Read back from block 0
+        uint8_t readData[BlockManager::BLOCK_SIZE] = {0};
+        manager.readBlock(0, readData);
+
+        // Verify data
+        bool matches = std::memcmp(writeData, readData, BlockManager::BLOCK_SIZE) == 0;
+        std::cout << "Block read/write " << (matches ? "succeeded" : "failed") << "\n";
+
+    } catch (const std::exception &ex) {
+        std::cerr << "Error: " << ex.what() << "\n";
     }
 
     return 0;
+
 }

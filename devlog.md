@@ -28,3 +28,6 @@ Issue with modifications in the dat file getting wrong charcters working on fixi
 
 Log Entry: 12/8/2024 7:27 
 Progess so far is sufficent, btree seems to work as intended. made a branch to test it and its functions. Next part of the implementation plan will be testing out in-memory operation with some testing then trying disk based operation. 
+
+Log Entry: 12/8/2024 8:02
+Working on testing inputing to disks, certain file types are not working

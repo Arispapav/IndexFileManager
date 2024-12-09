@@ -22,3 +22,6 @@ Inital Plan
 Log Entry: 12/8/2024 5:31 PM
 Progress so far is pretty good, no serious functions implemented just some validation testing and making sure creation of 
 index files works, and im able to detect that. Also just a driver program. Testing has been done and some initial issues. Next session will be for reading the write function for converting to and from big-endian and mapping 512-byte blocks.
+
+Log Entry: 12/8/2024 6:16 PM
+Issue with modifications in the dat file getting wrong charcters working on fixing it now

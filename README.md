@@ -16,7 +16,7 @@
   It includes logic for reading/writing nodes to disk, maintaining the header block, and ensuring keys are stored in big-endian format.
 
 - **writeIndex.cpp**:  
-  Provides utility functions for converting between host-endian and big-endian formats. These ensure correct byte ordering when reading and writing integers to the index file.
+  Provides functions for converting between host-endian and big-endian formats. These ensure correct byte ordering when reading and writing integers to the index file.
 
 ## Compilation Instructions
 Make sure all three files (`main.cpp`, `Btree.cpp`, and `writeIndex.cpp`) are in the same directory.

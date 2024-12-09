@@ -1,11 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <iomanip>
 #include "writeIndex.cpp"
+#include "Btree.cpp"
 using namespace std;
 
 const string MAGIC_NUMBER = "4337PRJ3"; // 8 bytes
 const int HEADER_SIZE = 512;
+void generateHexDump(const string, const string );
 
 // Function to create a new index file
 void createIndexFile() {
@@ -122,39 +125,73 @@ int main() {
             cout << "Invalid command. Please try again.\n";
         }
     } */ 
-    // Testing write conversion
-    uint64_t original = 1234567890123456789ULL;
-    uint8_t buffer[8];
+    // Testing B-Tree 
+      BTree btree("btree.dat");
+    string outputFile = "btree_hex_dump.txt";
+    btree.insert(10, 100);
+    btree.insert(20, 200);
+    btree.insert(30, 300);
 
-    toBigEndian(original, buffer);
-    uint64_t convertedBack = fromBigEndian(buffer);
-
-    std::cout << "Original: " << original << "\n";
-    std::cout << "Converted Back: " << convertedBack << "\n";
-
-    // Test block management
-    try {
-        BlockManager manager("index_file.dat");
-
-        // Create a block filled with test data
-        uint8_t writeData[BlockManager::BLOCK_SIZE] = {0};
-        std::fill_n(writeData, BlockManager::BLOCK_SIZE, 0xAA);
-
-        // Write to block 0
-        manager.writeBlock(0, writeData);
-
-        // Read back from block 0
-        uint8_t readData[BlockManager::BLOCK_SIZE] = {0};
-        manager.readBlock(0, readData);
-
-        // Verify data
-        bool matches = std::memcmp(writeData, readData, BlockManager::BLOCK_SIZE) == 0;
-        std::cout << "Block read/write " << (matches ? "succeeded" : "failed") << "\n";
-
-    } catch (const std::exception &ex) {
-        std::cerr << "Error: " << ex.what() << "\n";
+    if (btree.search(20)) {
+        std::cout << "Search successful.\n";
+    } else {
+        std::cout << "Key not found.\n";
     }
+    generateHexDump("btree.dat", outputFile);
 
     return 0;
-
+    
 }
+
+
+
+void generateHexDump(const std::string &binaryFile, const std::string &outputFile) {
+    std::ifstream input(binaryFile, std::ios::binary);
+    if (!input.is_open()) {
+        std::cerr << "Error: Unable to open binary file: " << binaryFile << "\n";
+        return;
+    }
+
+    std::ofstream output(outputFile);
+    if (!output.is_open()) {
+        std::cerr << "Error: Unable to open output file: " << outputFile << "\n";
+        return;
+    }
+
+    uint8_t buffer[16]; // Read 16 bytes at a time
+    size_t offset = 0;
+
+    output << "Hex Dump of " << binaryFile << ":\n";
+    while (input.read(reinterpret_cast<char *>(buffer), sizeof(buffer)) || input.gcount() > 0) {
+        // Print offset
+        output << std::setw(8) << std::setfill('0') << std::hex << offset << ": ";
+
+        // Print bytes in hex
+        for (size_t i = 0; i < sizeof(buffer); ++i) {
+            if (i < static_cast<size_t>(input.gcount())) {
+                output << std::setw(2) << static_cast<int>(buffer[i]) << " ";
+            } else {
+                output << "   "; // Empty space for alignment
+            }
+        }
+
+        // Print ASCII representation
+        output << " |";
+        for (size_t i = 0; i < static_cast<size_t>(input.gcount()); ++i) {
+            if (std::isprint(buffer[i])) {
+                output << static_cast<char>(buffer[i]);
+            } else {
+                output << ".";
+            }
+        }
+        output << "|\n";
+
+        offset += sizeof(buffer);
+    }
+
+    input.close();
+    output.close();
+
+    std::cout << "Hex dump generated in file: " << outputFile << "\n";
+}
+

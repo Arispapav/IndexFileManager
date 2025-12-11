@@ -1,4 +1,4 @@
-Log Entry: 12/8/2024 5:05 PM
+Log Entry: 12/8/2025 5:05 PM
 Thoughts on project
 Project from my understanding of reading the documentation, is to create a program that manages index files using a 
 B-tree stucture. Key functionalities I will have to consider are creating, opening, inserting, searching, and extracting data.
@@ -19,18 +19,18 @@ Inital Plan
 6. After each step make sure to perform tests to ensure functionality, also going to be using online gdb for compliation and
    debugging so ensure it works in cs1 and cs2 will be final step.
 
-Log Entry: 12/8/2024 5:31 PM
+Log Entry: 12/8/2025 5:31 PM
 Progress so far is pretty good, no serious functions implemented just some validation testing and making sure creation of 
 index files works, and im able to detect that. Also just a driver program. Testing has been done and some initial issues. Next session will be for reading the write function for converting to and from big-endian and mapping 512-byte blocks.
 
-Log Entry: 12/8/2024 6:16 PM
+Log Entry: 12/8/2025 6:16 PM
 Issue with modifications in the dat file getting wrong charcters working on fixing it now
 
-Log Entry: 12/8/2024 7:27 
+Log Entry: 12/8/2025 7:27 
 Progess so far is sufficent, btree seems to work as intended. made a branch to test it and its functions. Next part of the implementation plan will be testing out in-memory operation with some testing then trying disk based operation. 
 
-Log Entry: 12/8/2024 8:02
+Log Entry: 12/8/2025 8:02
 Working on testing inputing to disks, certain file types are not working
 
-Log Entry: 12/8/2024 9:11 
+Log Entry: 12/8/2025 9:11 
 Finished in-memory operations and disk based operations. Working on implenting all the commands and finishing the project.
